@@ -9,6 +9,7 @@ import com.kvmvkxnt.tasktracker.commands.MarkTodoCommand;
 import com.kvmvkxnt.tasktracker.commands.UpdateCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Spec;
 
 @Command(
     name = "task-cli",
@@ -30,8 +31,10 @@ public class App implements Runnable {
     System.exit(exitCode);
   }
 
+  @Spec CommandLine.Model.CommandSpec spec;
+
   @Override
   public void run() {
-    System.out.println("Use `--help` to see available commands.");
+    spec.commandLine().getOut().println("Use `--help` to see available commands.");
   }
 }

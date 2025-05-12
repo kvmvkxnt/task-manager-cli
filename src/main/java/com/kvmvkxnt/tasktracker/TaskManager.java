@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import picocli.CommandLine;
+import picocli.CommandLine.Spec;
 
 public class TaskManager {
+  @Spec CommandLine.Model.CommandSpec spec;
 
   private static final String FILE_PATH =
       System.getProperty("user.home")
@@ -65,7 +68,7 @@ public class TaskManager {
         new Task(newId, description, 0, createdAndUpdatedTimestamp, createdAndUpdatedTimestamp);
     tasks.add(newTask);
     saveTasks();
-    System.out.println(String.format("Task added successfully (ID: %d)", newId));
+    spec.commandLine().getOut().println(String.format("Task added successfully (ID: %d)", newId));
   }
 
   public Task findById(int id) {
@@ -76,9 +79,11 @@ public class TaskManager {
     boolean removed = tasks.removeIf(task -> task.id == id);
     if (removed) {
       saveTasks();
-      System.out.println(String.format("Task deleted successfully (ID: %d)", id));
+      spec.commandLine().getOut().println(String.format("Task deleted successfully (ID: %d)", id));
     } else {
-      System.out.println(String.format("Couldn't delete task! No task with such id. (ID: %d)", id));
+      spec.commandLine()
+          .getOut()
+          .println(String.format("Couldn't delete task! No task with such id. (ID: %d)", id));
     }
   }
 
@@ -88,9 +93,11 @@ public class TaskManager {
       task.description = description;
       task.updatedAt = LocalDateTime.now();
       saveTasks();
-      System.out.println(String.format("Task updated successfully (ID: %d)", id));
+      spec.commandLine().getOut().println(String.format("Task updated successfully (ID: %d)", id));
     } else {
-      System.out.println(String.format("Couldn't find the task to update (ID: %d)", id));
+      spec.commandLine()
+          .getOut()
+          .println(String.format("Couldn't find the task to update (ID: %d)", id));
     }
   }
 
@@ -100,9 +107,13 @@ public class TaskManager {
       task.status = status;
       task.updatedAt = LocalDateTime.now();
       saveTasks();
-      System.out.println(String.format("Task status changed successfully (ID: %d)", id));
+      spec.commandLine()
+          .getOut()
+          .println(String.format("Task status changed successfully (ID: %d)", id));
     } else {
-      System.out.println(String.format("Couldn't find the task to update (ID: %d)", id));
+      spec.commandLine()
+          .getOut()
+          .println(String.format("Couldn't find the task to update (ID: %d)", id));
     }
   }
 

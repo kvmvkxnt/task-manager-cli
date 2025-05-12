@@ -3,8 +3,10 @@ package com.kvmvkxnt.tasktracker.commands;
 import com.kvmvkxnt.tasktracker.Task;
 import com.kvmvkxnt.tasktracker.TaskManager;
 import java.util.List;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 
 @Command(name = "list", description = "List tasks")
 public class ListCommand implements Runnable {
@@ -15,6 +17,8 @@ public class ListCommand implements Runnable {
   private String statusFilter;
 
   private final TaskManager taskManager = new TaskManager();
+
+  @Spec CommandLine.Model.CommandSpec spec;
 
   @Override
   public void run() {
@@ -31,7 +35,7 @@ public class ListCommand implements Runnable {
           status = 1;
           break;
         default:
-          System.out.println("Invalid status.");
+          spec.commandLine().getOut().println("Invalid status.");
           return;
       }
     }
@@ -44,12 +48,18 @@ public class ListCommand implements Runnable {
     }
 
     if (tasks.size() == 0) {
-      System.out.println("No tasks found");
+      spec.commandLine().getOut().println("No tasks found");
     } else {
-      System.out.println("-------------------------------------------------------");
-      System.out.println("| ID | Description | Status | Created at | Updated at |");
-      System.out.println("-------------------------------------------------------");
-      tasks.forEach(task -> System.out.println(task.toString()));
+      spec.commandLine()
+          .getOut()
+          .println("-------------------------------------------------------");
+      spec.commandLine()
+          .getOut()
+          .println("| ID | Description | Status | Created at | Updated at |");
+      spec.commandLine()
+          .getOut()
+          .println("-------------------------------------------------------");
+      tasks.forEach(task -> spec.commandLine().getOut().println(task.toString()));
     }
   }
 }
