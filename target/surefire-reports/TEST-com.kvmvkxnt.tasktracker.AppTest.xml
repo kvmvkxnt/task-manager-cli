@@ -3,7 +3,7 @@
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/test-classes:/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/classes:/Users/kvmvxknt/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/kvmvxknt/.m2/repository/info/picocli/picocli/4.7.7/picocli-4.7.7.jar:"/>
+    <property name="java.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/test-classes:/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/classes:/Users/kvmvxknt/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/kvmvxknt/.m2/repository/info/picocli/picocli/4.7.7/picocli-4.7.7.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.0/jackson-datatype-jsr310-2.19.0.jar:"/>
     <property name="java.vm.vendor" value="Homebrew"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
@@ -12,10 +12,10 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="RU"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire/surefirebooter-20250512131216150_3.jar /Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire 2025-05-12T13-12-16_109-jvmRun1 surefire-20250512131216150_1tmp surefire_0-20250512131216150_2tmp"/>
+    <property name="sun.java.command" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire/surefirebooter-20250512175149592_3.jar /Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire 2025-05-12T17-51-49_552-jvmRun1 surefire-20250512175149592_1tmp surefire_0-20250512175149592_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/test-classes:/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/classes:/Users/kvmvxknt/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/kvmvxknt/.m2/repository/info/picocli/picocli/4.7.7/picocli-4.7.7.jar:"/>
+    <property name="surefire.test.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/test-classes:/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/classes:/Users/kvmvxknt/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/kvmvxknt/.m2/repository/info/picocli/picocli/4.7.7/picocli-4.7.7.jar:/Users/kvmvxknt/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.0/jackson-datatype-jsr310-2.19.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/Users/kvmvxknt"/>
     <property name="user.language" value="ru"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire/surefirebooter-20250512131216150_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/kvmvxknt/WORK/edu/task-tracker-cli/target/surefire/surefirebooter-20250512175149592_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="23.0.2"/>

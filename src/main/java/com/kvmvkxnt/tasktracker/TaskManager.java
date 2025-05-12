@@ -2,19 +2,34 @@ package com.kvmvkxnt.tasktracker;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskManager {
 
-  private static final String FILE_PATH = "tasks.json";
-  private final ObjectMapper mapper = new ObjectMapper();
+  private static final String FILE_PATH =
+      System.getProperty("user.home")
+          + File.separator
+          + ".local"
+          + File.separator
+          + "share"
+          + File.separator
+          + "task-cli"
+          + File.separator
+          + "tasks.json";
+  private final ObjectMapper mapper;
   private List<Task> tasks;
 
   public TaskManager() {
+    this.mapper = new ObjectMapper();
+    this.mapper.registerModule(new JavaTimeModule());
+    File dir = new File(FILE_PATH).getParentFile();
+    if (!dir.exists()) dir.mkdirs();
     this.tasks = loadTasks();
   }
 
@@ -45,7 +60,9 @@ public class TaskManager {
 
   public void addTask(String description) {
     int newId = tasks.stream().mapToInt(task -> task.id).max().orElse(0) + 1;
-    Task newTask = new Task(newId, description, 0);
+    LocalDateTime createdAndUpdatedTimestamp = LocalDateTime.now();
+    Task newTask =
+        new Task(newId, description, 0, createdAndUpdatedTimestamp, createdAndUpdatedTimestamp);
     tasks.add(newTask);
     saveTasks();
     System.out.println(String.format("Task added successfully (ID: %d)", newId));
@@ -61,7 +78,7 @@ public class TaskManager {
       saveTasks();
       System.out.println(String.format("Task deleted successfully (ID: %d)", id));
     } else {
-      System.out.println(String.format("Couldn't delete task (ID: %d)", id));
+      System.out.println(String.format("Couldn't delete task! No task with such id. (ID: %d)", id));
     }
   }
 
@@ -69,6 +86,7 @@ public class TaskManager {
     Task task = findById(id);
     if (task != null) {
       task.description = description;
+      task.updatedAt = LocalDateTime.now();
       saveTasks();
       System.out.println(String.format("Task updated successfully (ID: %d)", id));
     } else {
@@ -80,6 +98,7 @@ public class TaskManager {
     Task task = findById(id);
     if (task != null) {
       task.status = status;
+      task.updatedAt = LocalDateTime.now();
       saveTasks();
       System.out.println(String.format("Task status changed successfully (ID: %d)", id));
     } else {
@@ -88,10 +107,6 @@ public class TaskManager {
   }
 
   public List<Task> listByStatus(Integer status) {
-    if (status == null) {
-      return tasks;
-    } else {
-      return tasks.stream().filter(task -> task.status == status).collect(Collectors.toList());
-    }
+    return tasks.stream().filter(task -> task.status == status).collect(Collectors.toList());
   }
 }

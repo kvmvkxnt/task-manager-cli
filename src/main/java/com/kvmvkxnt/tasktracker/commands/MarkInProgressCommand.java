@@ -4,8 +4,8 @@ import com.kvmvkxnt.tasktracker.TaskManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "mark-done", description = "Mark the specified task as done")
-public class MarkDoneCommand implements Runnable {
+@Command(name = "mark-in-progress", description = "Mark the specified task as in-progress")
+public class MarkInProgressCommand implements Runnable {
   @Parameters(index = "0", description = "Id of the task to mark")
   private int id;
 
@@ -13,6 +13,6 @@ public class MarkDoneCommand implements Runnable {
 
   @Override
   public void run() {
-    taskManager.updateStatus(id, 2);
+    taskManager.updateStatus(id, 1);
   }
 }
