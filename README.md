@@ -65,6 +65,12 @@ And now, you're good to go. Binary should be located in the root directory of th
 
 You can either build the jar and use jar, or you can build a binary. If you decided to use jar, you need to use ```java -jar target/task-tracker-cli-1.0-SNAPSHOT-jar-with-dependencies.jar``` and commands. If you built a binary, you can go just with ```./task-cli```.
 
+To show a help message, run:
+
+```bash
+  task-cli --help
+```
+
 Listing available tasks can done by:
 
 ```bash
