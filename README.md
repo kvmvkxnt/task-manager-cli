@@ -7,7 +7,7 @@ A simple task tracker made with picocli and maven, fully written in Java. It can
 
 ## Additional information
 
-All tasks are normally saved to ```$HOME/.local/share/task-cli/tasks.json```. App has no option to edit this path, unless you change the code. Binary in release was built and tested only on ***macos arm64***, so if it doesn't work on your pc, you will have to manually build the project.
+All tasks are normally saved to ```$HOME/.local/share/task-cli/tasks.json```. App has no option to edit this path, unless you change the code. Binary in release was built and tested only on ***macos arm64***, so if it doesn't work on your pc, you will have to manually build the project. Project url is https://roadmap.sh/projects/task-tracker 
 
 
 ## Tech Stack
