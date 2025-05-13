@@ -9,12 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import picocli.CommandLine;
-import picocli.CommandLine.Spec;
 
 public class TaskManager {
-  @Spec CommandLine.Model.CommandSpec spec;
-
   private final File taskFile;
   private final ObjectMapper mapper;
   private List<Task> tasks;

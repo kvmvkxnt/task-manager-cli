@@ -2,29 +2,37 @@ package com.kvmvkxnt.tasktracker.commands;
 
 import com.kvmvkxnt.tasktracker.TaskManager;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Parameters;
-import picocli.CommandLine.Spec;
 
 @Command(name = "update", description = "Update task's description")
 public class UpdateCommand implements Runnable {
-  @Parameters(index = "0", description = "Id of the task to update")
   private int id;
 
-  @Parameters(index = "1", description = "New description of the task")
+  @Parameters(index = "0", description = "Id of the task to update")
+  public void setId(int id) {
+    this.id = id;
+  }
+
   private String description;
 
-  private final TaskManager taskManager = new TaskManager();
+  @Parameters(index = "1", description = "New description of the task")
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-  @Spec CommandSpec spec;
+  private final TaskManager taskManager;
+
+  public UpdateCommand(TaskManager taskManager) {
+    this.taskManager = taskManager;
+  }
 
   @Override
   public void run() {
     boolean updated = taskManager.updateTask(id, description);
     if (updated) {
-      spec.commandLine().getOut().println("Task updated successfully!");
+      System.out.println("Task updated successfully!");
     } else {
-      spec.commandLine().getOut().println("Couldn't find the task to update!");
+      System.out.println("Couldn't find the task to update!");
     }
   }
 }

@@ -3,22 +3,26 @@ package com.kvmvkxnt.tasktracker.commands;
 import com.kvmvkxnt.tasktracker.Task;
 import com.kvmvkxnt.tasktracker.TaskManager;
 import java.util.List;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
-import picocli.CommandLine.Spec;
 
 @Command(name = "list", description = "List tasks")
 public class ListCommand implements Runnable {
+  private String statusFilter;
+
   @Parameters(
       index = "0",
       description = "Status of the task: todo, done, in-progress",
       arity = "0..1")
-  private String statusFilter;
+  public void setStatusFilter(String statusFilter) {
+    this.statusFilter = statusFilter;
+  }
 
-  private final TaskManager taskManager = new TaskManager();
+  private final TaskManager taskManager;
 
-  @Spec CommandLine.Model.CommandSpec spec;
+  public ListCommand(TaskManager taskManager) {
+    this.taskManager = taskManager;
+  }
 
   @Override
   public void run() {
@@ -35,7 +39,7 @@ public class ListCommand implements Runnable {
           status = 1;
           break;
         default:
-          spec.commandLine().getOut().println("Invalid status.");
+          System.out.println("Invalid status.");
           return;
       }
     }
@@ -48,18 +52,13 @@ public class ListCommand implements Runnable {
     }
 
     if (tasks.size() == 0) {
-      spec.commandLine().getOut().println("No tasks found");
+      System.out.println("No tasks found");
     } else {
-      spec.commandLine()
-          .getOut()
-          .println("-------------------------------------------------------");
-      spec.commandLine()
-          .getOut()
-          .println("| ID | Description | Status | Created at | Updated at |");
-      spec.commandLine()
-          .getOut()
-          .println("-------------------------------------------------------");
-      tasks.forEach(task -> spec.commandLine().getOut().println(task.toString()));
+      System.out.println(
+          "-------------------------------------------------------\n"
+              + "| ID | Description | Status | Created at | Updated at |\n"
+              + "-------------------------------------------------------");
+      tasks.forEach(task -> System.out.println(task.toString()));
     }
   }
 }

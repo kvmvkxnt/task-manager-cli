@@ -2,26 +2,30 @@ package com.kvmvkxnt.tasktracker.commands;
 
 import com.kvmvkxnt.tasktracker.TaskManager;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Parameters;
-import picocli.CommandLine.Spec;
 
 @Command(name = "mark-todo", description = "Mark the specified task as todo")
 public class MarkTodoCommand implements Runnable {
-  @Parameters(index = "0", description = "Id of the task to mark")
   private int id;
 
-  private final TaskManager taskManager = new TaskManager();
+  @Parameters(index = "0", description = "Id of the task to mark")
+  public void setId(int id) {
+    this.id = id;
+  }
 
-  @Spec CommandSpec spec;
+  private final TaskManager taskManager;
+
+  public MarkTodoCommand(TaskManager taskManager) {
+    this.taskManager = taskManager;
+  }
 
   @Override
   public void run() {
     boolean marked = taskManager.updateStatus(id, 0);
     if (marked) {
-      spec.commandLine().getOut().println("Task status changed successfully!");
+      System.out.println("Task status changed successfully!");
     } else {
-      spec.commandLine().getOut().println("Couldn't find the task to update!");
+      System.out.println("Couldn't find the task to update!");
     }
   }
 }

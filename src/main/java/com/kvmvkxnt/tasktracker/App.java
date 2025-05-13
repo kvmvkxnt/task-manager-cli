@@ -9,32 +9,31 @@ import com.kvmvkxnt.tasktracker.commands.MarkTodoCommand;
 import com.kvmvkxnt.tasktracker.commands.UpdateCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Spec;
 
 @Command(
     name = "task-cli",
     mixinStandardHelpOptions = true,
     version = "1.0",
-    description = "Task tracker CLI application",
-    subcommands = {
-      AddCommand.class,
-      DeleteCommand.class,
-      ListCommand.class,
-      MarkDoneCommand.class,
-      MarkInProgressCommand.class,
-      MarkTodoCommand.class,
-      UpdateCommand.class
-    })
+    description = "Task tracker CLI application")
 public class App implements Runnable {
   public static void main(String[] args) {
-    int exitCode = new CommandLine(new App()).execute(args);
+    TaskManager taskManager = new TaskManager();
+
+    CommandLine cmd = new CommandLine(new App());
+    cmd.addSubcommand("add", new AddCommand(taskManager));
+    cmd.addSubcommand("delete", new DeleteCommand(taskManager));
+    cmd.addSubcommand("list", new ListCommand(taskManager));
+    cmd.addSubcommand("mark-done", new MarkDoneCommand(taskManager));
+    cmd.addSubcommand("mark-in-progress", new MarkInProgressCommand(taskManager));
+    cmd.addSubcommand("mark-todo", new MarkTodoCommand(taskManager));
+    cmd.addSubcommand("update", new UpdateCommand(taskManager));
+
+    int exitCode = cmd.execute(args);
     System.exit(exitCode);
   }
 
-  @Spec CommandLine.Model.CommandSpec spec;
-
   @Override
   public void run() {
-    spec.commandLine().getOut().println("Use `--help` to see available commands.");
+    System.out.println("Use `--help` to see available commands.");
   }
 }

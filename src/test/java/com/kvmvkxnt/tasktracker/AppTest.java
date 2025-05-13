@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -16,18 +17,21 @@ public class AppTest {
   void testRunWithoutArgumentsShowsHelpHint() {
     CommandLine cmd = new CommandLine(app);
 
-    // Capture output
-    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    PrintWriter writer = new PrintWriter(outContent, true);
-    cmd.setOut(writer);
+    PrintStream out = System.out;
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    String expected = "Use `--help` to see available commands.\n";
 
-    int exitCode = cmd.execute(); // no arguments
-    String output = outContent.toString().trim();
+    try {
+      System.setOut(new PrintStream(baos));
+      int exitCode = cmd.execute();
 
-    assertEquals(0, exitCode, "Application exit code should be 0");
-    assertTrue(
-        output.contains("Use `--help` to see available commands."),
-        "Application must show tip when executed without commands");
+      assertEquals(0, exitCode, "Application exit code should be 0");
+      assertEquals(expected, baos.toString());
+
+
+    } finally {
+      System.setOut(out);
+    }
   }
 
   @Test
