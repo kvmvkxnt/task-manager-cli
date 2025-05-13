@@ -15,34 +15,42 @@ import picocli.CommandLine.Spec;
 public class TaskManager {
   @Spec CommandLine.Model.CommandSpec spec;
 
-  private static final String FILE_PATH =
-      System.getProperty("user.home")
-          + File.separator
-          + ".local"
-          + File.separator
-          + "share"
-          + File.separator
-          + "task-cli"
-          + File.separator
-          + "tasks.json";
+  private final File taskFile;
   private final ObjectMapper mapper;
   private List<Task> tasks;
 
   public TaskManager() {
+    this(getDefaultFilePath());
+  }
+
+  public TaskManager(File file) {
+    this.taskFile = file;
     this.mapper = new ObjectMapper();
     this.mapper.registerModule(new JavaTimeModule());
-    File dir = new File(FILE_PATH).getParentFile();
+    File dir = file.getParentFile();
     if (!dir.exists()) dir.mkdirs();
     this.tasks = loadTasks();
   }
 
+  private static File getDefaultFilePath() {
+    return new File(
+        System.getProperty("user.home")
+            + File.separator
+            + ".local"
+            + File.separator
+            + "share"
+            + File.separator
+            + "task-cli"
+            + File.separator
+            + "tasks.json");
+  }
+
   private List<Task> loadTasks() {
-    File file = new File(FILE_PATH);
-    if (!file.exists()) {
+    if (!taskFile.exists() || taskFile.length() == 0) {
       return new ArrayList<>();
     }
     try {
-      return mapper.readValue(file, new TypeReference<List<Task>>() {});
+      return mapper.readValue(taskFile, new TypeReference<List<Task>>() {});
     } catch (IOException e) {
       e.printStackTrace();
       return new ArrayList<>();
@@ -51,7 +59,7 @@ public class TaskManager {
 
   public void saveTasks() {
     try {
-      mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), tasks);
+      mapper.writerWithDefaultPrettyPrinter().writeValue(taskFile, tasks);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -61,59 +69,49 @@ public class TaskManager {
     return tasks;
   }
 
-  public void addTask(String description) {
+  public Task addTask(String description) {
     int newId = tasks.stream().mapToInt(task -> task.id).max().orElse(0) + 1;
     LocalDateTime createdAndUpdatedTimestamp = LocalDateTime.now();
     Task newTask =
         new Task(newId, description, 0, createdAndUpdatedTimestamp, createdAndUpdatedTimestamp);
     tasks.add(newTask);
     saveTasks();
-    spec.commandLine().getOut().println(String.format("Task added successfully (ID: %d)", newId));
+    return newTask;
   }
 
   public Task findById(int id) {
     return tasks.stream().filter(task -> task.id == id).findFirst().orElse(null);
   }
 
-  public void deleteTask(int id) {
+  public boolean deleteTask(int id) {
     boolean removed = tasks.removeIf(task -> task.id == id);
     if (removed) {
       saveTasks();
-      spec.commandLine().getOut().println(String.format("Task deleted successfully (ID: %d)", id));
-    } else {
-      spec.commandLine()
-          .getOut()
-          .println(String.format("Couldn't delete task! No task with such id. (ID: %d)", id));
     }
+    return removed;
   }
 
-  public void updateTask(int id, String description) {
+  public boolean updateTask(int id, String description) {
     Task task = findById(id);
     if (task != null) {
       task.description = description;
       task.updatedAt = LocalDateTime.now();
       saveTasks();
-      spec.commandLine().getOut().println(String.format("Task updated successfully (ID: %d)", id));
+      return true;
     } else {
-      spec.commandLine()
-          .getOut()
-          .println(String.format("Couldn't find the task to update (ID: %d)", id));
+      return false;
     }
   }
 
-  public void updateStatus(int id, int status) {
+  public boolean updateStatus(int id, int status) {
     Task task = findById(id);
     if (task != null) {
       task.status = status;
       task.updatedAt = LocalDateTime.now();
       saveTasks();
-      spec.commandLine()
-          .getOut()
-          .println(String.format("Task status changed successfully (ID: %d)", id));
+      return true;
     } else {
-      spec.commandLine()
-          .getOut()
-          .println(String.format("Couldn't find the task to update (ID: %d)", id));
+      return false;
     }
   }
 

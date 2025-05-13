@@ -24,8 +24,10 @@ public class AppTest {
     int exitCode = cmd.execute(); // no arguments
     String output = outContent.toString().trim();
 
-    assertEquals(0, exitCode);
-    assertTrue(output.contains("Use `--help` to see available commands."));
+    assertEquals(0, exitCode, "Application exit code should be 0");
+    assertTrue(
+        output.contains("Use `--help` to see available commands."),
+        "Application must show tip when executed without commands");
   }
 
   @Test
@@ -39,8 +41,8 @@ public class AppTest {
     int exitCode = cmd.execute("--help");
     String output = outContent.toString().trim();
 
-    assertEquals(0, exitCode);
-    assertTrue(output.contains("Usage: task-cli"));
+    assertEquals(0, exitCode, "Application exit code should be 0");
+    assertTrue(output.contains("Usage: task-cli"), "Application must show help message.");
   }
 
   @Test
@@ -55,7 +57,9 @@ public class AppTest {
     int exitCode = cmd.execute("nonexistent");
     String output = outContent.toString().trim();
 
-    assertNotEquals(0, exitCode);
-    assertTrue(output.contains("Unmatched argument at index 0: 'nonexistent'"));
+    assertNotEquals(0, exitCode, "Application exit code should not be 0");
+    assertTrue(
+        output.contains("Unmatched argument at index 0: 'nonexistent'"),
+        "Application must show error message");
   }
 }

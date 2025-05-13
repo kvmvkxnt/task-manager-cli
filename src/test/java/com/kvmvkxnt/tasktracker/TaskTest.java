@@ -17,7 +17,8 @@ public class TaskTest {
 
     assertEquals(
         String.format("| 1 | New task | TODO | %s | %s |", formattedDateTime, formattedDateTime),
-        task.toString());
+        task.toString(),
+        "Task toString method should show proper test with proper status (TODO)");
   }
 
   @Test
@@ -30,6 +31,7 @@ public class TaskTest {
 
     assertEquals(
         String.format("| 1 | New task | UNKNOWN | %s | %s |", formattedDateTime, formattedDateTime),
-        task.toString());
+        task.toString(),
+        "Task status must be UNKNOWN due to 321 status");
   }
 }

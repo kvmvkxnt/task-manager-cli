@@ -2,7 +2,9 @@ package com.kvmvkxnt.tasktracker.commands;
 
 import com.kvmvkxnt.tasktracker.TaskManager;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 
 @Command(name = "update", description = "Update task's description")
 public class UpdateCommand implements Runnable {
@@ -14,8 +16,15 @@ public class UpdateCommand implements Runnable {
 
   private final TaskManager taskManager = new TaskManager();
 
+  @Spec CommandSpec spec;
+
   @Override
   public void run() {
-    taskManager.updateTask(id, description);
+    boolean updated = taskManager.updateTask(id, description);
+    if (updated) {
+      spec.commandLine().getOut().println("Task updated successfully!");
+    } else {
+      spec.commandLine().getOut().println("Couldn't find the task to update!");
+    }
   }
 }

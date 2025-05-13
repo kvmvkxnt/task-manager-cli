@@ -2,7 +2,9 @@ package com.kvmvkxnt.tasktracker.commands;
 
 import com.kvmvkxnt.tasktracker.TaskManager;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 
 @Command(name = "mark-done", description = "Mark the specified task as done")
 public class MarkDoneCommand implements Runnable {
@@ -11,8 +13,15 @@ public class MarkDoneCommand implements Runnable {
 
   private final TaskManager taskManager = new TaskManager();
 
+  @Spec CommandSpec spec;
+
   @Override
   public void run() {
-    taskManager.updateStatus(id, 2);
+    boolean marked = taskManager.updateStatus(id, 2);
+    if (marked) {
+      spec.commandLine().getOut().println("Task status changed successfully!");
+    } else {
+      spec.commandLine().getOut().println("Couldn't find the task to update!");
+    }
   }
 }
